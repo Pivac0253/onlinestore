@@ -1,0 +1,53 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}Your shopping cart{% endblock %}
+
+{% block content %}
+    <h1>Корзина покупок</h1>
+    <table class="cart">
+        <thead>
+            <tr>
+                <th>Фото</th>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Удалить</th>
+                <th>Цена за единицу</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if cart.cart %}
+            {% for item in cart %}
+                <tr>
+                    <td>
+                        <a href="{{ item.product.get_absolute_url }}">
+                            <img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+                        </a>
+                    </td>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td><a href="{% url 'cart:cart_remove' item.product.id %}">Удалить</a></td>
+                    <td class="num">{{ item.price }} руб.</td>
+                    <td class="num">{{ item.total_price }} руб.</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6">Корзина пуста</td>
+            </tr>
+        {% endif %}
+        <tr class="total">
+            <td>Итоговая сумма:</td>
+            <td colspan="4"></td>
+            <td class="num">{{ cart.get_total_price }} руб.</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-right">
+        <a href="{% url 'shop:product_list' %}" class="button light">Продолжить покупки</a>
+        <a href="{% url 'orders:order_create' %}" class="button">
+    Оформить заказ
+</a>
+    </p>
+{% endblock %}

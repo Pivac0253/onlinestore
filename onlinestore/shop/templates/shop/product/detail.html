@@ -1,0 +1,36 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ product.name }}
+{% endblock %}
+
+{% block content %}
+  <div class="product-detail">
+    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+         alt="{{ product.name }}"
+         style="max-width: 300px; height: auto;">
+    <h1>{{ product.name }}</h1>
+    <h2>
+      <a href="{% url 'shop:product_list_by_category' category_slug=product.category.slug %}">
+        {{ product.category.name }}
+      </a>
+    </h2>
+    <p class="price">{{ product.price }} руб.</p>
+
+    <form action="{% url 'cart:cart_add' product_id=product.id %}" method="post" style="margin: 20px 0;">
+      {% csrf_token %}
+      {{ cart_product_form.quantity }}
+      {{ cart_product_form.update }}
+      <input type="submit" value="Добавить в корзину"
+             style="padding: 8px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+    </form>
+
+    <div class="description">
+      {{ product.description|linebreaks }}
+    </div>
+  </div>
+{% endblock %}
+
+
+
