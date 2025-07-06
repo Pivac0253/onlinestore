@@ -1,11 +1,12 @@
-from django.shortcuts import render
-from .models import OrderItem
+# views.py
+from django.shortcuts import render, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import Order, OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
 
 
 def order_create(request):
-    # Гарантируем наличие сессии
     if not request.session.session_key:
         request.session.create()
 
@@ -14,7 +15,12 @@ def order_create(request):
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
-            order = form.save()
+            order = form.save(commit=False)
+            if cart.coupon:
+                order.coupon = cart.coupon
+                order.discount = cart.coupon.discount
+            order.save()
+
             for item in cart:
                 OrderItem.objects.create(
                     order=order,
@@ -31,5 +37,13 @@ def order_create(request):
         'cart': cart,
         'form': form
     })
+
+
+@staff_member_required
+def admin_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request,
+                  'admin/orders/order/detail.html',
+                  {'order': order})
 
 

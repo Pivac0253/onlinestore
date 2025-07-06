@@ -37,17 +37,40 @@
                 <td colspan="6">Корзина пуста</td>
             </tr>
         {% endif %}
+        {% if cart.coupon %}
+            <tr class="subtotal">
+                <td>Промежуточный итог</td>
+                <td colspan="4"></td>
+                <td class="num">{{ cart.get_total_price }} руб.</td>
+            </tr>
+            <tr>
+                <td>
+                    Купон "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% скидка)
+                </td>
+                <td colspan="4"></td>
+                <td class="num neg">
+                    - {{ cart.get_discount|floatformat:"2" }} руб.
+                </td>
+            </tr>
+        {% endif %}
         <tr class="total">
             <td>Итоговая сумма:</td>
             <td colspan="4"></td>
-            <td class="num">{{ cart.get_total_price }} руб.</td>
+            <td class="num">
+                {{ cart.get_total_price_after_discount|floatformat:"2" }} руб.
+            </td>
         </tr>
         </tbody>
     </table>
+
+    <form action="{% url 'coupons:apply' %}" method="post" class="coupon-form">
+        {{ coupon_apply_form }}
+        <input type="submit" value="Применить купон">
+        {% csrf_token %}
+    </form>
+
     <p class="text-right">
         <a href="{% url 'shop:product_list' %}" class="button light">Продолжить покупки</a>
-        <a href="{% url 'orders:order_create' %}" class="button">
-    Оформить заказ
-</a>
+        <a href="{% url 'orders:order_create' %}" class="button">Оформить заказ</a>
     </p>
 {% endblock %}
