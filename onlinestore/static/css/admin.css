@@ -1,0 +1,145 @@
+/* static/css/admin.css */
+
+/* Основные цвета темы: синие оттенки, напоминающие воду */
+:root {
+    --primary-blue: #1a6fc9;
+    --secondary-blue: #5dade2;
+    --light-blue: #e6f2ff;
+    --dark-blue: #154360;
+    --wave-blue: #2e86c1;
+}
+
+/* Общие стили для админ-панели */
+#header {
+    background-color: var(--dark-blue);
+    color: white;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background-color: var(--secondary-blue);
+    color: white;
+}
+
+/* Стили для детальной страницы заказа */
+.object-tools a {
+    background-color: var(--primary-blue);
+}
+
+.object-tools a:hover {
+    background-color: var(--dark-blue);
+}
+
+/* Стили для таблиц с заказами */
+table {
+    border: 2px solid var(--light-blue);
+    border-radius: 5px;
+}
+
+th {
+    background-color: var(--light-blue);
+    color: var(--dark-blue);
+}
+
+tr.row1 {
+    background-color: white;
+}
+
+tr.row2 {
+    background-color: #f5f9ff;
+}
+
+tr.total {
+    background-color: var(--light-blue);
+    font-weight: bold;
+}
+
+.num {
+    text-align: right;
+    font-family: monospace;
+}
+
+/* Специальные стили для статуса заказа */
+td[colspan="3"] {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Стили для статуса оплаты */
+td:contains("Paid") {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+td:contains("Pending payment") {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Водная тематика - декоративные элементы */
+.content:before {
+    content: "";
+    display: block;
+    height: 10px;
+    background: linear-gradient(90deg,
+        var(--primary-blue) 0%,
+        var(--secondary-blue) 50%,
+        var(--primary-blue) 100%);
+    margin-bottom: 20px;
+    border-radius: 3px;
+}
+
+/* Адаптация для печати */
+@media print {
+    .object-tools, .breadcrumbs {
+        display: none;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    table {
+        border: 1px solid #ddd;
+    }
+}
+
+/* Анимация для кнопок */
+button, input[type="submit"], .button {
+    transition: all 0.3s ease;
+    background-color: var(--primary-blue);
+}
+
+button:hover, input[type="submit"]:hover, .button:hover {
+    background-color: var(--dark-blue);
+    transform: translateY(-2px);
+}
+
+/* Стили для элементов, связанных с продуктами */
+.field-product .related-widget-wrapper {
+    border-left: 3px solid var(--wave-blue);
+    padding-left: 10px;
+}
+
+/* Кастомные стили для страницы деталей заказа */
+#order-detail h1 {
+    color: var(--dark-blue);
+    border-bottom: 2px solid var(--secondary-blue);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Стили для списка товаров в заказе */
+.inline-related table {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.inline-related table th {
+    background-color: var(--wave-blue);
+    color: white;
+}
+
+.inline-related table tr:hover {
+    background-color: rgba(45, 134, 193, 0.1);
+}
