@@ -4,31 +4,31 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/admin.css" %}" />
 {% endblock %}
 {% block title %}
-    Order {{ order.id }} {{ block.super }}
+    Заказ {{ order.id }} {{ block.super }}
 {% endblock %}
 {% block breadcrumbs %}
     <div class="breadcrumbs">
-        <a href="{% url "admin:index" %}">Home</a> &rsaquo;
-        <a href="{% url "admin:orders_order_changelist" %}">Orders</a>
+        <a href="{% url "admin:index" %}">Главная</a> &rsaquo;
+        <a href="{% url "admin:orders_order_changelist" %}">Заказы</a>
         &rsaquo;
-        <a href="{% url "admin:orders_order_change" order.id %}">Order {{ order.id }}</a>
-        &rsaquo; Detail
+        <a href="{% url "admin:orders_order_change" order.id %}">Заказ {{ order.id }}</a>
+        &rsaquo; Детали
     </div>
 {% endblock %}
 {% block content %}
-    <h1>Order {{ order.id }}</h1>
+    <h1>Заказ {{ order.id }}</h1>
     <ul class="object-tools">
         <li>
-            <a href="#" onclick="window.print();">Print order</a>
+            <a href="#" onclick="window.print();">Печать заказа</a>
         </li>
     </ul>
     <table>
         <tr>
-            <th>Created</th>
+            <th>Создан</th>
             <td>{{ order.created }}</td>
         </tr>
         <tr>
-            <th>Customer</th>
+            <th>Клиент</th>
             <td>{{ order.first_name }} {{ order.last_name }}</td>
         </tr>
         <tr>
@@ -36,42 +36,42 @@
             <td><a href="mailto:{{ order.email }}">{{ order.email }}</a></td>
         </tr>
         <tr>
-            <th>Address</th>
+            <th>Адрес</th>
             <td>{{ order.address }}, {{ order.postal_code }} {{ order.city }}</td>
         </tr>
         <tr>
-            <th>Total amount</th>
-            <td>${{ order.get_total_cost }}</td>
+            <th>Общая сумма</th>
+            <td>{{ order.get_total_cost }} руб.</td>
         </tr>
         <tr>
-            <th>Status</th>
-            <td>{% if order.paid %}Paid{% else %}Pending payment{% endif %}</td>
+            <th>Статус</th>
+            <td>{% if order.paid %}Оплачен{% else %}Ожидает оплаты{% endif %}</td>
         </tr>
     </table>
     <div class="module">
         <div class="tabular inline-related last-related">
             <table>
-                <h2>Items bought</h2>
+                <h2>Купленные товары</h2>
                 <thead>
                     <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
+                        <th>Товар</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Итого</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in order.items.all %}
                         <tr class="row{% cycle "1" "2" %}">
                             <td>{{ item.product.name }}</td>
-                            <td class="num">${{ item.price }}</td>
+                            <td class="num">{{ item.price }} руб.</td>
                             <td class="num">{{ item.quantity }}</td>
-                            <td class="num">${{ item.get_cost }}</td>
+                            <td class="num">{{ item.get_cost }} руб.</td>
                         </tr>
                     {% endfor %}
                     <tr class="total">
-                        <td colspan="3">Total</td>
-                        <td class="num">${{ order.get_total_cost }}</td>
+                        <td colspan="3">Всего</td>
+                        <td class="num">{{ order.get_total_cost }} руб.</td>
                     </tr>
                 </tbody>
             </table>

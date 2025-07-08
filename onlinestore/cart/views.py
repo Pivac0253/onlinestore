@@ -20,10 +20,18 @@ def cart_add(request, product_id):
         request.session.modified = True
     return redirect('cart:cart_detail')
 
+@require_POST
 def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
+    request.session.modified = True
+    return redirect('cart:cart_detail')
+
+@require_POST
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
     request.session.modified = True
     return redirect('cart:cart_detail')
 

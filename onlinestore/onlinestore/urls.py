@@ -1,18 +1,14 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Подключаем cart ДО shop, чтобы /cart/ не перехватывался как slug категории
+    path('', include('shop.urls')),  # Теперь главная страница - shop.urls
     path('cart/', include('cart.urls', namespace='cart')),
-    path('', include('shop.urls', namespace='shop')),
     path('orders/', include('orders.urls', namespace='orders')),
-    path('coupons/', include('coupons.urls', namespace='coupons')),  # Добавьте эту строку
+    path('coupons/', include('coupons.urls', namespace='coupons')),
 ]
 
 if settings.DEBUG:

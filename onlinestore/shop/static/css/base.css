@@ -1,13 +1,33 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
-body { 
+body {
     margin:0;
     padding:0;
-    font-family:helvetica, sans-serif; 
+    font-family:helvetica, sans-serif;
+    min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5 , h6 { 
-    font-family: 'Ubuntu', sans-serif; font-weight:normal;
+/* Фон для главной страницы */
+body.homepage {
+    background-image: url('/static/shop/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* Стили для контента с полупрозрачным фоном */
+#content {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3, h4, h5 , h6 {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight:normal;
 }
 
 a {
@@ -44,7 +64,7 @@ a.button.light {
 table {
     width:100%;
     border-spacing:0;
-    border-collapse: collapse; 
+    border-collapse: collapse;
 }
 
 table th, table td {
@@ -111,10 +131,9 @@ ul.errorlist {
    color:#ff0000;
    clear:both;
    font-size:13px;
-   margin:0; 
+   margin:0;
    padding:0;
 }
-
 
 #header {
     padding:10px 100px;
@@ -181,7 +200,7 @@ ul.errorlist {
   float: none;
   width: auto;
   margin-right: 0;
-  padding-left: 240px; /* Отступ для сайдбара */
+  padding-left: 240px;
 }
 
 .product-list .item {
@@ -315,7 +334,6 @@ ul.errorlist {
     width:120px;
 }
 
-/* braintree hosted fields */
 form div.field {
     font-size:13px;
     color:#666;
@@ -389,7 +407,6 @@ form div.field {
   cursor: pointer;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
   #main {
     padding-left: 0;
@@ -404,4 +421,43 @@ form div.field {
   .products-container {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  #header, #subheader, #content {
+    padding: 10px 20px;
+  }
+}
+
+/* Стили для главной страницы */
+.hero-content {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #2a5885;
+}
+
+.hero-content .subtitle {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.hero-content .button {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    background: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.hero-content .button:hover {
+    background: #3e8e41;
+    color: white;
 }
