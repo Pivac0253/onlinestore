@@ -3,20 +3,21 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}My shop{% endblock %}</title>
+  <title>{% block title %}Мой магазин{% endblock %}</title>
   <link href="{% static 'css/base.css' %}" rel="stylesheet">
+  {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
   <div id="header">
-    <a href="/" class="logo">SUP-борды</a>
+    <a href="{% url 'shop:product_list' %}" class="logo">SUP-борды</a>
   </div>
   <div id="subheader">
     <div class="cart">
       {% with total_items=cart|length %}
         {% if cart|length > 0 %}
-          Your cart:
+          Ваша корзина:
           <a href="{% url 'cart:cart_detail' %}">
-            {{ total_items }} item{{ total_items|pluralize }},
+            {{ total_items }} товар{{ total_items|pluralize:"а,ов" }},
             {{ cart.get_total_price }} руб.
           </a>
         {% else %}
@@ -29,5 +30,11 @@
     {% block content %}
     {% endblock %}
   </div>
+
+  <!-- Дополнительные скрипты -->
+  {% block scripts %}
+  {% endblock %}
+
 </body>
 </html>
+

@@ -1,0 +1,41 @@
+<!-- orders/templates/orders/order/order_email.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Подтверждение заказа</title>
+</head>
+<body>
+    <h2>Спасибо за ваш заказ!</h2>
+    <p>Номер вашего заказа: <strong>{{ order.id }}</strong></p>
+
+    <h3>Детали заказа:</h3>
+    <table>
+        <tr>
+            <th>Товар</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Итого</th>
+        </tr>
+        {% for item in order.items.all %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.price }} руб.</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.get_cost }} руб.</td>
+        </tr>
+        {% endfor %}
+        {% if order.coupon %}
+        <tr>
+            <td colspan="3">Скидка ({{ order.coupon.code }})</td>
+            <td>- {{ order.get_discount|floatformat:"2" }} руб.</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td colspan="3"><strong>Общая сумма:</strong></td>
+            <td><strong>{{ order.get_total_cost }} руб.</strong></td>
+        </tr>
+    </table>
+
+    <p>С уважением,<br>Команда SUPBOARD</p>
+</body>
+</html>

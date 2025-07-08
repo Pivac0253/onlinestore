@@ -1,5 +1,5 @@
 from django.db import models
-from django.urls import reverse  # Импорт reverse для генерации URL
+from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
@@ -14,7 +14,6 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        """Генерирует URL для категории"""
         return reverse('shop:product_list_by_category', args=[self.slug])
 
 class Product(models.Model):
@@ -38,15 +37,17 @@ class Product(models.Model):
     )
     stock = models.PositiveIntegerField(verbose_name='Количество на складе')
     available = models.BooleanField(default=True, verbose_name='Доступен')
+    featured = models.BooleanField(default=False, verbose_name='Рекомендуемый')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('-featured', 'name')  # Сначала рекомендуемые, потом по имени
         indexes = [
             models.Index(fields=['id', 'slug']),
             models.Index(fields=['name']),
             models.Index(fields=['-created']),
+            models.Index(fields=['-featured']),
         ]
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
@@ -55,8 +56,8 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        """Генерирует URL для товара"""
         return reverse('shop:product_detail', args=[self.id, self.slug])
+
 
 
 
